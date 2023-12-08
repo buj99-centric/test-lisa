@@ -10,3 +10,9 @@
   <p>lat: {{ loc.latitude }}</p>
   <p>lng: {{ loc.longitude }}</p>
 </ng-container>
+
+<input
+  type="file"
+  accept="image/x-png,image/jpeg,image/gif"
+  (change)="upload()"
+/>

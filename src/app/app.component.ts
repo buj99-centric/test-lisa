@@ -29,4 +29,19 @@ export class AppComponent implements OnInit {
       alert('Install prompt is not available');
     }
   }
+
+  upload(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      const filePicker = document.querySelector('input');
+
+      if (!filePicker || !filePicker.files || filePicker.files.length <= 0) {
+        reject('No file selected.');
+        return;
+      }
+      const myFile = filePicker.files[0];
+      console.log(myFile);
+
+      resolve();
+    });
+  }
 }
