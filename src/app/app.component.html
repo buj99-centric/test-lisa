@@ -1,1 +1,12 @@
-<button mat-raised-button (click)="onInstallClick()">install</button>
+<button
+  mat-raised-button
+  (click)="onInstallClick()"
+  [disabled]="!installPrompt"
+>
+  install
+</button>
+
+<ng-container *ngIf="location | async as loc">
+  <p>lat: {{ loc.latitude }}</p>
+  <p>lng: {{ loc.longitude }}</p>
+</ng-container>

@@ -1,17 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   installPrompt!: Event;
-
+  location: Subject<GeolocationCoordinates> =
+    new Subject<GeolocationCoordinates>();
   constructor() {
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
       this.installPrompt = event;
+    });
+  }
+  ngOnInit(): void {
+    navigator.geolocation.watchPosition((position: GeolocationPosition) => {
+      this.location.next(position.coords);
     });
   }
 
