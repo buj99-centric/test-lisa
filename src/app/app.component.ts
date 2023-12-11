@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { ImagesService } from './services/images.service';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +11,14 @@ export class AppComponent implements OnInit {
   installPrompt!: Event;
   location: Subject<GeolocationCoordinates> =
     new Subject<GeolocationCoordinates>();
-  constructor() {
+  images: Observable<string[]>;
+  constructor(private imagesService: ImagesService) {
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
       this.installPrompt = event;
     });
+
+    this.images = this.imagesService.ImagesAsUrl;
   }
   ngOnInit(): void {
     navigator.geolocation.watchPosition((position: GeolocationPosition) => {
@@ -39,8 +43,8 @@ export class AppComponent implements OnInit {
         return;
       }
       const myFile = filePicker.files[0];
+      this.imagesService.addImage(myFile);
       console.log(myFile);
-
       resolve();
     });
   }

@@ -16,3 +16,7 @@
   accept="image/x-png,image/jpeg,image/gif"
   (change)="upload()"
 />
+
+<ng-container *ngFor="let imageUrl of images | async">
+  <img [src]="imageUrl" alt=""
+/></ng-container>
